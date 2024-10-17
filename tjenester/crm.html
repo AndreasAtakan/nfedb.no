@@ -1,0 +1,408 @@
+<!--
+/*******************************************************************************
+* Copyright (C) Nordfjord EDB AS - All Rights Reserved                         *
+*                                                                              *
+* Unauthorized copying of this file, via any medium is strictly prohibited     *
+* Proprietary and confidential                                                 *
+* Written by Andreas Atakan <aca@geotales.io>, August 2024                     *
+*******************************************************************************/
+-->
+
+<!DOCTYPE html>
+<html lang="no">
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="x-ua-compatible" content="ie=edge" />
+	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, minimum-scale=1, shrink-to-fit=no, user-scalable=no, target-densitydpi=medium-dpi" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+
+	<title>Nordfjord EDB</title>
+	<meta name="title" content="Skreddersydde eiendomsanalyser" />
+	<meta name="description" content="Vi finner den ideelle eiendommen for deg" />
+	<meta name="author" content="Nordfjord EDB AS" />
+	<meta name="copyright" content="Copyright(c) Nordfjord EDB AS. All rights reserved." />
+
+	<meta name="theme-color" content="#ffffff" />
+	<meta name="msapplication-TileColor" content="#023141" />
+	<link rel="apple-touch-icon" sizes="180x180" href="../assets/favicon/apple-touch-icon.png" />
+	<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon/favicon-32x32.png" />
+	<link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon/favicon-16x16.png" />
+	<link rel="mask-icon" href="../assets/favicon/safari-pinned-tab.svg" color="#5bbad5" />
+	<link rel="manifest" href="../assets/favicon/site.webmanifest" />
+	<!--link rel="icon" href="../assets/logo.jpg" /-->
+
+	<!-- Open Graph / Facebook / LinkedIn -->
+	<meta property="og:type" content="website" />
+	<!--meta property="og:url" content="https://nfedb.no/" /-->
+	<meta property="og:title" content="Skreddersydde eiendomsanalyser" />
+	<meta property="og:description" content="Vi finner den ideelle eiendommen for deg" />
+	<meta property="og:site_name" content="Nordfjord EDB" />
+	<meta property="og:image" content="../assets/ex_blur.png" />
+	<!--meta property="og:image:type" content="image/png" /-->
+
+	<!-- Twitter / X -->
+	<meta property="twitter:card" content="summary_large_image" />
+	<meta property="twitter:site" content="@Geotales_io" />
+	<meta property="twitter:creator" content="@Geotales_io" />
+	<!--meta property="twitter:url" content="https://geotales.io/" /-->
+	<meta property="twitter:title" content="Skreddersydde eiendomsanalyser" />
+	<meta property="twitter:description" content="Vi finner den ideelle eiendommen for deg" />
+	<meta property="twitter:image" content="../assets/ex_blur.png" />
+
+	<!-- Google-Analytics tag (gtag.js) -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-XH3QZ5EP8D"></script>
+	<script>
+		window.dataLayer = window.dataLayer || []; function gtag() { dataLayer.push(arguments); }
+		gtag("js", new Date()); gtag("config", "G-XH3QZ5EP8D");
+	</script>
+
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+
+	<link rel="stylesheet" href="../lib/fontawesome/css/all.min.css" />
+	<!--script src="../lib/fontawesome/js/all.min.js"></script-->
+
+	<link rel="stylesheet" href="../lib/air-datepicker/air-datepicker.css" />
+
+	<link rel="stylesheet" href="../css/main.css" />
+
+	<style type="text/css">
+
+		/*#nav { background-color: #eba937 !important; }*/
+
+		#banner {
+			height: 150px;
+			background-image: url('../assets/banner3_blur.png');
+		}
+
+	</style>
+</head>
+<body>
+
+	<div class="modal fade" id="loadingModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="loadingModalLabel">Laster inn</h5>
+					<!--button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button-->
+				</div>
+				<div class="modal-body">
+					<div class="spinner-border text-primary" role="status">
+						<span class="visually-hidden">Laster inn...</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<header>
+		<nav class="navbar navbar-expand-md bg-white fixed-top" id="nav">
+			<div class="container">
+				<a class="navbar-brand" href="../index.html">
+					<img src="../assets/logo.jpg" class="rounded" alt="NORDFJORD EDB" height="30" width="auto" />
+					<strong>NORDFJORD EDB</strong>
+				</a>
+
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+
+				<div class="collapse navbar-collapse" id="navbarCollapse" style="/*flex-grow: 0;*/">
+					<a role="button" class="btn btn-lg btn-outline-success ms-auto my-2 px-4" href="#contact">
+						<strong>Ta kontakt</strong>
+					</a>
+				</div>
+			</div>
+		</nav>
+	</header>
+
+	<main role="main">
+		<div id="alert_area"></div>
+
+		<div class="container-fluid">
+			<div class="row mb-5" id="home">
+				<div class="col text-center">
+					<div class="m-0 p-0" id="banner"></div>
+
+					<!--h1 class="display-6 text-light text-shadow mb-1" style="margin: 15rem auto 1rem auto; font-weight: 999;">
+						Skreddersydd eiendomsanalyse
+					</h1-->
+				</div>
+			</div>
+
+			<div class="row mb-5" id="about" style="margin-top: calc(12rem + 3rem);">
+				<div class="col">
+					<div class="row">
+						<div class="col my-5">
+							<p class="small mb-2" style="color: #32aa27;">
+								<strong>GeoTales Mosaic</strong>
+							</p>
+
+							<p class="lead mb-3" style="font-weight: bold;">
+								En kraftig kartbasert løsning for kundehåndtering
+							</p>
+							<p class="text-muted mb-2">
+								Få full kontroll over dine geografisk betingede kunder med <strong>GeoTales Mosaic</strong> – et avansert, interaktivt kartbasert CRM-system. <br />
+								Visualiser og organiser kundekontakter ved å markere deres eiendommer med ulike farger basert på status og interaksjon. <br />
+								Ved å integrere geografisk informasjon direkte i kartet, gir <strong>GeoTales Mosaic</strong> deg enestående innsikt som gjør kundeoppfølgingen mer intuitiv og effektiv.
+							</p>
+							<p class="text-muted mb-2">
+								Med <strong>GeoTales Mosaic</strong> blir kundene dine en levende mosaikk på kartet, og systemet tilbyr sømløs integrasjon av GIS-data for å identifisere potensielle kunder basert på geografiske analyser. <br />
+								Dette gir deg et konkurransefortrinn ved å kombinere kundedata med geografisk innsikt, slik at du kan optimalisere salgsprosesser og fokuserte tiltak i nøkkelområder.
+							</p>
+							<p class="text-muted mb-3">
+								<strong>GeoTales Mosaic</strong> gir deg den nødvendige visuelle forståelsen for å forbedre kundeforholdene dine – spesielt i forretninger hvor lokasjon og geografi er avgjørende for suksess.
+							</p>
+							<p class="text-muted mb-1">
+								<a class="text-muted" href="#contact">Ta kontakt eller bestill et møte</a>!
+							</p>
+						</div>
+
+						<!--div class="col-md-5 my-5">
+							<a class="text-decoration-none" href="https://taak.trefadder.nfedb.no/" target="_blank">
+								<img class="img-fluid shadow" src="../assets/taak.png" alt="&nbsp;" />
+							</a>
+						</div-->
+					</div>
+				</div>
+			</div>
+
+			<div class="row mb-5" id="references">
+				<div class="col">
+					<!--p class="small mb-4" style="color: #32aa27;">
+						<strong>Referanseprosjekter</strong>
+					</p>
+
+					<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4 mx-3 mx-md-0 mb-5">
+						<div class="col">
+							<div class="card shaded shadow">
+								<div class="card-body">
+									<h6 class="card-title">
+										<strong>Prosjekter med Trefadder AS</strong>
+									</h6>
+									<p class="card-text">
+										Vi har gjennomført flere interne analyser og visualiseringsprosjekter for Trefadder, hvor vi har benyttet avanserte kartverktøy og analysemodeller. <br />
+										Dette inkluderer blant annet: <br />
+										<a class="text-dark" href="https://taak.trefadder.nfedb.no/" target="_blank">TÅK – Trefadder Åpent Kundekart</a> <br />
+										<span style="font-size: 12px;">(I samarbeid med <a class="text-muted" href="https://moller.systems/no/" target="_blank">Møller Systems</a>)</span> <br /> og
+										<a class="text-dark" href="https://klimaskog.nfedb.no/" target="_blank">Søkekart</a>.
+									</p>
+								</div>
+							</div>
+						</div>
+						<div class="col"></div>
+						<div class="col"></div>
+					</div-->
+
+					<div class="row row-cols-2 row-cols-sm-5 row-cols-md-4 g-3 mx-3 mx-md-0 mb-3">
+						<div class="col">
+							<a class="text-dark text-decoration-none" href="arealregnskap.html">
+							<div class="card shaded highlight-background shadow">
+								<div class="card-body">
+									<h5 class="card-title mb-2"><strong>Natur- og arealregnskap</strong></h5>
+								</div>
+							</div>
+							</a>
+						</div>
+						<div class="col">
+							<a class="text-dark text-decoration-none" href="arealkonflikter.html">
+							<div class="card shaded highlight-background shadow">
+								<div class="card-body">
+									<h5 class="card-title mb-2"><strong>Kartlegging av arealkonflikter</strong></h5>
+								</div>
+							</div>
+							</a>
+						</div>
+						<div class="col">
+							<a class="text-dark text-decoration-none" href="offentlige_planer.html">
+							<div class="card shaded highlight-background shadow">
+								<div class="card-body">
+									<h5 class="card-title mb-2"><strong>Analyse av kommunale planer</strong></h5>
+								</div>
+							</div>
+							</a>
+						</div>
+						<div class="col">
+							<a class="text-dark text-decoration-none" href="produksjonsskog.html">
+							<div class="card shaded highlight-background shadow">
+								<div class="card-body">
+									<h5 class="card-title mb-2"><strong>Analyse av produksjonsskog</strong></h5>
+								</div>
+							</div>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row shaded" id="featured">
+				<div class="col">
+					<div class="row g-0">
+						<div class="col my-5">
+							<p class="small mb-4" style="color: #32aa27;">
+								<strong>Relaterte sektorer</strong>
+							</p>
+
+							<div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 g-3 mx-3 mx-md-0 mb-5">
+								<div class="col">
+									<a class="text-decoration-none" href="../sektorer/skogforvaltning.html">
+									<div class="card shadow highlight">
+										<img class="card-img-top" src="../assets/skogsforvaltning.png" alt="&nbsp;" />
+										<div class="card-body">
+											<h6 class="card-title">
+												<strong>Areal- og skogsforvaltning</strong>
+												<i class="fa-solid fa-chevron-right"></i>
+											</h6>
+										</div>
+									</div>
+									</a>
+								</div>
+								<div class="col">
+									<a class="text-decoration-none" href="../sektorer/offentlig_sektor.html">
+									<div class="card shadow highlight">
+										<img class="card-img-top" src="../assets/offentlig_sektor.png" alt="&nbsp;" />
+										<div class="card-body">
+											<h6 class="card-title">
+												<strong>Offentlig sektor</strong>
+												<i class="fa-solid fa-chevron-right"></i>
+											</h6>
+										</div>
+									</div>
+									</a>
+								</div>
+								<div class="col">
+									<a class="text-decoration-none" href="../sektorer/forskning.html">
+									<div class="card shadow highlight">
+										<img class="card-img-top" src="../assets/forskning.png" alt="&nbsp;" />
+										<div class="card-body">
+											<h6 class="card-title">
+												<strong>Forskning og analyse</strong>
+												<i class="fa-solid fa-chevron-right"></i>
+											</h6>
+										</div>
+									</div>
+									</a>
+								</div>
+								<div class="col">
+									<a class="text-decoration-none" href="../sektorer/veldedige.html">
+									<div class="card shadow highlight">
+										<img class="card-img-top" src="../assets/veldedige.jpg" alt="&nbsp;" />
+										<div class="card-body">
+											<h6 class="card-title">
+												<strong>Veldedige organisasjoner</strong>
+												<i class="fa-solid fa-chevron-right"></i>
+											</h6>
+										</div>
+									</div>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row" id="contact">
+				<div class="col">
+					<div class="row">
+						<div class="col-md-5 my-5">
+							<h4 class="mb-1" style="color: #32aa27; font-weight: bold;">
+								Har du flere spørsmål?
+							</h4>
+							<p class="lead text-muted mb-3">
+								Vennligst ta kontakt her
+							</p>
+
+							<form id="form_contact">
+								<div class="mb-3">
+									<input type="email" class="form-control" name="email" placeholder="E-post" required />
+								</div>
+								<div class="mb-3">
+									<textarea class="form-control" name="message" rows="4" placeholder="Hva kan vi hjelpe deg med?" required></textarea>
+								</div>
+								<div class="mb-4">
+									<label for="date" class="form-label text-muted">Om du også ønsker et møte, velg dato her</label>
+									<div class="input-group">
+										<input type="date" class="form-control" name="date" id="date" />
+										<input type="time" class="form-control" name="time" />
+									</div>
+								</div>
+								<div class="d-grid">
+									<button type="submit" class="btn btn-success">Send inn</button>
+								</div>
+							</form>
+
+							<hr class="mt-4 mb-5" />
+						</div>
+
+						<div class="col-md-7"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+
+	<footer class="container-fluid">
+		<div class="row">
+			<div class="col">
+				<div class="row g-0">
+					<div class="col-md small my-4 my-md-5">
+						<p class="text-light mb-1">Oversikt</p>
+						<p class="mb-1"><a class="text-light-muted" href="#">Hjem</a></p>
+					</div>
+
+					<div class="col-md text-light-muted text-md-center small my-4 my-md-5">
+						<p class="mb-4">
+							Tjenestene våre er utviklet og levert med <br />
+							<a class="text-light-muted" href="https://arv.geotales.io/" target="_blank">GeoTales™ ARV</a>
+							og støttet av Innovasjon Norge. <br />
+							<a class="text-decoration-none" href="https://www.innovasjonnorge.no/" target="_blank">
+								<img class="img-fluid mt-2" src="../assets/logos/innovasjon_norge_light.png" alt="Innovasjon Norge" style="max-width: 100px;" />
+							</a>
+						</p>
+
+						<p class="text-light mb-2">© <span id="ccYear">2024</span>, Nordfjord EDB AS</p>
+						<p>Org.nr. <a class="text-light-muted" href="https://data.brreg.no/enhetsregisteret/oppslag/enheter/928624846" target="_blank">928 624 846</a></p>
+					</div>
+
+					<div class="col-md text-light-muted text-md-end small my-4 my-md-5">
+						<p class="mb-2">
+							<i class="fa-solid fa-envelope"></i>
+							<a class="text-light-muted" href="mailto:kontakt@nfedb.no?subject=Spørsmål til Nordfjord EDB">kontakt@nfedb.no</a>
+						</p>
+						<p class="mb-1">
+							<i class="fa-solid fa-phone"></i>
+							<a class="text-light-muted" href="tlf:004748006325">+47 480 06 325</a>
+						</p>
+						<p class="mb-2">
+							&nbsp;&nbsp;&nbsp;&nbsp;
+							<a class="text-light-muted" href="tlf:004746845196">+47 468 45 196</a>
+						</p>
+						<p class="mb-3">
+							<i class="fa-solid fa-location-dot"></i>
+							<a class="text-light-muted" href="https://maps.app.goo.gl/J1P3G5ymC3RajxGs7" target="_blank">NO 6793 Innvik</a>
+						</p>
+						<p style="font-size: 20px;">
+							<a class="text-decoration-none text-light-muted" href="https://www.facebook.com/Geotales.io" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+							&nbsp;
+							<a class="text-decoration-none text-light-muted" href="https://www.linkedin.com/company/nordfjord-edb/" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+	<script type="text/javascript" src="../lib/air-datepicker/air-datepicker.js"></script>
+
+	<script type="text/javascript" src="../js/helper.js"></script>
+	<script type="text/javascript" src="../js/main.js"></script>
+
+	<script type="text/javascript">
+		window.addEventListener("load", init);
+	</script>
+
+</body>
+</html>

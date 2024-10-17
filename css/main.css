@@ -1,0 +1,152 @@
+/*******************************************************************************
+* Copyright (C) Nordfjord EDB AS - All Rights Reserved                         *
+*                                                                              *
+* Unauthorized copying of this file, via any medium is strictly prohibited     *
+* Proprietary and confidential                                                 *
+* Written by Andreas Atakan <aca@geotales.io>, September 2023                  *
+*******************************************************************************/
+
+@charset "UTF-8";
+
+
+
+html, body {
+	padding: 0;
+	margin: 0;
+}
+
+/*hr { margin: 5rem 0; }*/
+
+.h-0 { display: none !important; }
+
+.btn:not(.rounded),
+.modal-content,
+.dropdown-menu,
+input:not([type=radio]),
+textarea,
+select {
+	border-radius: 0 !important;
+	-o-border-radius: 0 !important;
+	-moz-border-radius: 0 !important;
+	-webkit-border-radius: 0 !important;
+}
+
+.card, .card-img-top { border-radius: 0; }
+.card { border: none; }
+
+input[type=number] { -moz-appearance: textfield; }
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+.link-dark { color: black; }
+
+.text-light-muted { color: #b3b3b3; }
+
+.text-shadow {
+	text-shadow: #404040 -1px 1px 2px;
+	-webkit-font-smoothing: antialiased;
+}
+.text-shadow-dark {
+	text-shadow: #000 -1px 1px 2px;
+	-webkit-font-smoothing: antialiased;
+}
+.text-shadow-light {
+	text-shadow: #fff -1px 1px 2px;
+	-webkit-font-smoothing: antialiased;
+}
+
+.text-purple { color: purple !important; }
+.text-red { color: darkred !important; }
+.text-green { color: darkgreen !important; }
+
+.row.shaded { background-color: #eef1ef; }
+.card.shaded { background-color: #f2f2f2; }
+
+.card.highlight {
+	color: rgba(33,37,41,1); /* .text-dark */
+	transition: all .2s;
+}
+.card.highlight:hover {
+	color: #32aa27;
+	transform: scale(1.05);
+}
+.card.highlight-background {
+	background-color: #d9f5d6;
+	transition: transform .2s;
+}
+.card.highlight-background:hover { transform: scale(1.05); }
+
+
+
+
+:root {
+	--header-height: 80px;
+	--header-height-collapsed: 58.65px;
+}
+
+#alert_area {
+	position: fixed;
+	z-index: 1;
+	bottom: 10px;
+	right: 10px;
+	margin: 2px 5px;
+	padding: 0;
+}
+
+.bookingCalender { width: 100%; }
+
+#banner {
+	position: absolute;
+	z-index: -1;
+	top: var(--header-height);
+	left: 0;
+	width: 100%;
+	height: 500px;
+	background-image: none;
+	background-attachment: fixed;
+	background-position: bottom;
+	background-repeat: no-repeat;
+	background-size: cover;
+	-o-background-size: cover;
+	-moz-background-size: cover;
+	-webkit-background-size: cover;
+}
+@supports(-webkit-touch-callout: none) { /* Fix for IOS Safari */
+	#banner { background-attachment: scroll; }
+}
+
+footer { background-color: #162415; }
+main .container-fluid>.row,
+footer.container-fluid>.row { justify-content: center; }
+main .container-fluid>.row>.col,
+footer>.row>.col { max-width: 1100px; }
+
+
+/* 'xxl' applies to x-large devices (large desktops, more than 1400px) */
+@media (min-width: 1400px) {
+	main .container-fluid>.row>.col,
+	footer>.row>.col { max-width: 1180px; }
+}
+
+/* 'xl' applies to large devices (desktops, more than 1200px) */
+@media (max-width: 1200px) {
+	main .container-fluid>.row>.col,
+	footer>.row>.col { max-width: 940px; }
+}
+
+/* 'lg' applies to medium devices (tablets, more than 992px) */
+@media (max-width: 992px) {
+	main .container-fluid>.row>.col,
+	footer>.row>.col { max-width: 700px; }
+}
+
+/* 'md' applies to small devices (landscape phones, more than 768px) */
+@media (max-width: 768px) {
+	#banner { top: var(--header-height-collapsed); }
+}
+
+/* 'sm' applies to x-small devices (portrait phones, more than 576px) */
+@media (max-width: 576px) {}
