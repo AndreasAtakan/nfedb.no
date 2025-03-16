@@ -22,12 +22,10 @@ function init() {
 
 		$.ajax({
 			type: "POST",
-			url: "/api.php",
-			data: {
-				"op": "new_lead",
-				"email": vals.email.value,
-				"message": msg
-			},
+			url: "https://wqv62urqquygjeqqlzjjervr6e0djeyi.lambda-url.eu-north-1.on.aws/new_lead",
+			contentType: "application/json",
+			dataType: "json",
+			data: JSON.stringify({ "email": vals.email.value, "message": msg }),
 			success: function(result, status, xhr) {
 				$("#alert_area").html(`
 					<div role="alert" class="alert alert-success alert-dismissible fade show">

@@ -22,6 +22,8 @@ build/
 */.env.test.local
 */.env.production.local
 
+build.zip
+
 temp/
 temp.*
 
