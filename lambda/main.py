@@ -44,6 +44,9 @@ async def new_lead(request: Request):
 	event = await request.json()
 	if not 'email' in event and not 'message' in event: return _422()
 
+	op = 'nfedb'
+	if 'op' in event: op = event['op']
+
 	RES = {}
 	STATUS_CODE = 0
 
@@ -52,7 +55,7 @@ async def new_lead(request: Request):
 			Source='contact@geotales.io',
 			Destination={ 'ToAddresses': [ 'aca@geotales.io', 'jeh@geotales.io' ] },
 			Message={
-				'Subject': { 'Data': 'Ny melding, nfedb.no kontaktskjema' },
+				'Subject': { 'Data': f'Ny melding, {op} kontaktskjema' },
 				'Body': {
 					'Text': {
 						'Data': f'''Fra {event["email"]}, {event["message"]}'''
