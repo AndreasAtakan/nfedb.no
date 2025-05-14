@@ -52,8 +52,8 @@ async def new_lead(request: Request):
 
 	try:
 		response = ses_client.send_email(
-			Source='contact@geotales.io',
-			Destination={ 'ToAddresses': [ 'aca@geotales.io', 'jeh@geotales.io' ] },
+			Source='kontakt@nfedb.no',
+			Destination={ 'ToAddresses': [ 'aca@nfedb.no', 'jeh@nfedb.no' ] },
 			Message={
 				'Subject': { 'Data': f'Ny melding, {site} kontaktskjema' },
 				'Body': {
