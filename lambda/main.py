@@ -76,4 +76,47 @@ async def new_lead(request: Request):
 
 
 
+@app.post("/arv_register")
+async def arv_register(request: Request):
+	event = await request.json()
+	if not 'navn' in event or \
+	   not 'epost' in event or \
+	   not 'org_navn' in event or \
+	   not 'org_nr' in event or \
+	   not 'er_offentlig' in event: return _422()
+
+	RES = {}
+	STATUS_CODE = 0
+
+	try:
+		response = ses_client.send_email(
+			Source='kontakt@nfedb.no',
+			Destination={ 'ToAddresses': [ 'aca@nfedb.no', 'jeh@nfedb.no' ] },
+			Message={
+				'Subject': { 'Data': f'ARV, forespørsel om tilgang' },
+				'Body': {
+					'Text': {
+						'Data': f'''
+Navn: {event["navn"]}
+E-post: {event["epost"]}
+Organisasjon {event["org_navn"]} (org.nr. {event["org_nr"]})
+Er offentlig instans: {'Ja' if event["er_offentlig"] else 'Nei'}
+'''
+					}
+				}
+			}
+		)
+		RES = {'status': 'success'}
+		STATUS_CODE = 200
+
+	except Exception as e:
+		print(f'Error: {e}')
+		RES = {'error': 'Internal Server Error'}
+		STATUS_CODE = 500
+
+	finally:
+		return _response(STATUS_CODE, RES)
+
+
+
 handler = Mangum(app)
